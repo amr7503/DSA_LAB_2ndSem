@@ -16,9 +16,79 @@ public class LinkedList{
   
   public static void main(String[] args){
     Node head=null;
-    head=create(head);
-    search(head);
+    Scanner sc=new Scanner(System.in);
+    //head=create(head);
+    //search(head);
     //display(head);
+    while(true)
+    {
+     System.out.println("****MENU*****");
+     System.out.println("0:Exit");
+     System.out.println("1:Creation");
+     System.out.println("2:Display");
+     System.out.println("3:Insert at beginning");
+     System.out.println("4:Insert at end");
+     System.out.println("5:Insert at any position");
+     System.out.println("6:Delete from beginning");
+     System.out.println("7:Delete from end");
+     System.out.println("8:Delete from any position");
+     System.out.println("9:Delete by regd_no");
+     System.out.println("10:Search");
+     System.out.println("11:Sort");
+     System.out.println("12:count");
+     System.out.println("13:Reverse");
+    
+     System.out.println("Enter the choice");
+     choice=sc.nextInt();
+     switch(choice)
+     {
+     case 0:
+         System.exit(0);
+     case 1:
+         head=create(start);
+     break;
+     case 2:
+         display(start);
+     break;
+     case 3:
+         head=InsBeg(start);
+     break;
+     case 4:
+         head=InsEnd(start);
+     break;
+     case 5:
+         head=InsAnyPos(start);
+     break;
+     case 6:
+         head=DelBeg(start);
+     break;
+     case 7:
+         head=DelEnd(start);
+     break;
+     case 8:
+         head=DelAnyPos(start);
+     break;
+     case 9:
+         head=DelRegdNo(start);
+     break;
+     case 10:
+         head=search(start);
+     break;
+     case 11:
+         head=sort(start);
+     break;
+     case 12:
+         head=count(start);
+     break;
+     case 13:
+         head=reverse(start);
+     break;
+     default:
+     System.out.println("Wrong choice");
+
+     }
+     }
+
   }
  /////////////////////////////////////////////////////////////////////////////////// 
 public static Node create(Node start){
