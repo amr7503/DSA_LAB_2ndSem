@@ -1,164 +1,228 @@
-class Node{
-  int data;
-  Node next;
-  Node back;
-  Node(int data){
-    this.data=data;
-  }
-  Node(int data,Node next,Node back){
-    this.data=data;
-    this.next=next;
-    this.back=back;
-  }
+import java.util.Scanner;
+class Node
+{
+    protected int regd_no;
+    protected float mark;
+    protected Node next;
+    protected Node prev;
+    Node(int reg,float mark){
+        this.regd_no=reg;
+        this.mark=mark;
+    }
+    Node(){}
+
 }
+public class DoubleLinkedList {
+	public static Node start = null;
+	public static Node end= null;
+	public static Scanner sc=new Scanner(System.in);
+	
+    public static void main(String[] args) {
+        
+        /*
+        Node start=new Node();
+        start.regd_no=sc.nextInt();
+        start.mark=sc.nextFloat();
+        Node node = new Node(); */
+        while(true)
+        {
+            System.out.println("*MENU**");
+            System.out.println("0: Exit");
+            System.out.println("1: Creation");
+            System.out.println("2: Display");
+            System.out.println("3: Insert Beginning");
+            System.out.println("4: Insert End");
+            System.out.println("5: Insert any Position");
+            System.out.println("6: Delete Beginning");
+            System.out.println("7: Delete End");
+            System.out.println("8: Delete any Position");
+            System.out.println("9: Search");
+            System.out.println("Enter your choice");
+            int choice=sc.nextInt();
+            switch(choice)
+            {
+                case 0:
+                    System.exit(0);
+                case 1:
+                    end=create(start,end);
+                    break;
+                case 2:
+                    display(start,end);
+                    break;
+                case 3:
+                	start=insBeg(start,end);
+                	break;
+                case 4:
+                	end=insEnd(start,end);
+                	break;
+                case 5:
+                	start=insAny(start,end);
+                	break;
+                case 6:
+                	start=delBeg(start,end);
+                	break;
+                case 7:
+                	end=delEnd(start,end);
+                	break;
+                case 8:
+                	delAny(start,end);
+                	break;
+                case 9:
+                	search(start);
+                default:
+                    System.out.println("Wrong choice");
+            }
+        }
 
-public class DoublyLinkedList {
-////////////////////////////////////////////////////////////////////
-  public static void main(String[] args) {
-    int[] arr= {34,37,74,73,52,29,55};
-    Node head=convertArrToDll(arr);
-    print(head);
-    //head=deleteHead(head);
-    //print(head);
-    //head=deleteHead(head);
 
-    //head=removeKthElement(head,1);
-    //deleteNode(head.next.next.next.next.next.next);
-    //head=insertBeforeTail(head,58);
-    //head=insertBeforeKthElement(head,1,55);
-    //insertBeforeNode(head.next.next,89);
-    print(head);
-
-  }
-//////////////////////////////////////////////////////////////////////
-  public static Node insertBeforeHead(Node head,int val) {
-    Node newHead=new Node(val,head,null);
-    head.back=newHead;
-    return newHead;
-  }
-//////////////////////////////////////////////////////////////////////
-  public static Node insertBeforeTail(Node head,int val) {
-    if(head.next==null) return insertBeforeHead(head,val);
-
-    Node tail=head;
-    while(tail.next!=null) tail=tail.next;
-
-    Node prev=tail.back;
-    Node newNode=new Node(val,tail,prev);
-    prev.next=tail.back=newNode;
-
-    return head;
-  }
-//////////////////////////////////////////////////////////////////////
-  public static Node insertBeforeKthElement(Node head,int k,int val) {
-    if(k==1) return insertBeforeHead(head,val);
-
-    Node mover=head;
-    int cnt=0;
-    while(mover!=null) {
-      cnt++;
-      if(cnt==k) break;
-      mover=mover.next;
     }
-    Node prev=mover.back;
-    Node newNode=new Node(val,mover,prev);
-    prev.next=newNode;
-    mover.back=newNode;
-
-    return head;
-  }
-//////////////////////////////////////////////////////////////////////
-  public static void insertBeforeNode(Node node,int val) {
-    //It is an insertion method I don't want to change the head
-    Node prev=node.back;
-    Node newNode =new Node(val,node,prev);
-    prev.next=newNode;
-    node.back=newNode;
-  }
-//////////////////////////////////////////////////////////////////////
-  public static Node deleteHead(Node head) {
-    if(head==null || head.next==null) {
-      return null;
+    public static Node create(Node start, Node end){
+    	Node new_node=new Node();
+    	System.out.println("Enter the regd no : ");
+    	new_node.regd_no=sc.nextInt();
+    	System.out.println("Enter the marks : ");
+    	new_node.mark=sc.nextFloat();
+		if(start==null){
+			start=new_node;
+			end=new_node;
+		}
+		else {
+			end.next=new_node;
+			new_node.prev=end;
+			end=new_node;
+		}
+    return start;
     }
-    Node prev=head;
-    head=head.next; //this is enough
-    head.back=null;
-    prev.next=null;
+    public static void display(Node start, Node end){
+        Node mover = start;
+        System.out.println("The DoubleLinkedList is : ");
+        while(mover!=null){
+            System.out.println(mover.regd_no+" "+mover.mark);
+            mover=mover.next;
+        }
 
-    return head;
-  }
-//////////////////////////////////////////////////////////////////////
-  public static Node deleteTail(Node head) {
-    if(head==null || head.next==null) return null;
-
-    Node tail=head;
-    while(tail.next!=null) tail=tail.next;
-
-    Node newTail=tail.back;
-    newTail.next=null;
-    tail.back=null;
-
-    return head;
-  }
-//////////////////////////////////////////////////////////////////////
-  public static Node  removeKthElement(Node head,int k) {
-    if(head==null) return null;
-    int cnt=0;
-    Node kNode=head;
-    while(kNode!=null) {
-      cnt++;
-      if(cnt == k) break;
-      kNode=kNode.next;
     }
-
-    Node prev=kNode.back;
-    Node front=kNode.next;
-
-    if(prev==null && front==null) return null;
-    else if(prev==null)  return deleteHead(head); 
-    else if(front==null) return deleteTail(head);
-
-    prev.next=front;
-    front.back=prev;
-
-    kNode.next=null;
-    kNode.back=null;
-    return head;
-  }
-//////////////////////////////////////////////////////////////////////
-  public static void deleteNode(Node temp) {
-    Node prev=temp.back;
-    Node front=temp.next;
-
-    if(front==null) {
-      prev.next=null;
-      temp.back=null;
-      return;
+    
+    
+     public static Node insBeg(Node start, Node end){
+    	 Node new_node=new Node();
+     	System.out.println("Enter the regd no : ");
+     	new_node.regd_no=sc.nextInt();
+     	System.out.println("Enter the marks : ");
+     	new_node.mark=sc.nextFloat();
+     	if(start==null){
+             start=new_node;
+             end=new_node;
+         }
+         else{
+             new_node.next=start;
+             start.prev=new_node;
+             start=new_node;
+            }
+         
+     return start;
+     }
+     
+     
+     public static Node insEnd(Node start, Node end){
+    	Node new_node=new Node();
+      	System.out.println("Enter the regd no : ");
+      	new_node.regd_no=sc.nextInt();
+      	System.out.println("Enter the marks : ");
+      	new_node.mark=sc.nextFloat();
+      	if(start==null){
+              start=new_node;
+              end=new_node;
+          }
+          else{
+              end.next=new_node;
+              new_node.prev=end;
+              end=new_node;
+          }
+      	
+        return end;
+     }
+    public static Node insAny(Node start, Node end){
+    	Node new_node=new Node();
+      	System.out.println("Enter the regd no : ");
+      	new_node.regd_no=sc.nextInt();
+      	System.out.println("Enter the marks : ");
+      	new_node.mark=sc.nextFloat();
+      	System.out.println("Enter the position to insert : ");
+      	int n=sc.nextInt();
+      	Node mover=start;
+      	for(int i=1;i<=n-2;i++){
+             mover=mover.next; 
+          }
+          mover.next.prev=new_node;
+          new_node.next=mover.next;
+          mover.next=new_node;
+          new_node.prev=mover;
+          
+      	
+      	
+        return start;
     }
-    prev.next=front;
-    front.back=prev;
-    temp.next=temp.back=null;
-  }
-//////////////////////////////////////////////////////////////////////
-  public static Node convertArrToDll(int[] arr) {
-    Node head=new Node(arr[0]);
-    Node prev=head;
-
-    for(int i=1;i<arr.length;i++) {
-      Node temp=new Node(arr[i],null,prev);
-      prev.next=temp;
-      prev=prev.next;//or temp
+    public static Node delBeg(Node start, Node end){
+    	if(start==null) {
+    		System.out.println("List is empty");
+    		return start;
+    	}
+    	
+    	start=start.next;
+    	if(start==null)
+    	{
+    		end=null;
+    	}
+    	else {
+    	start.prev=null;
+    	}
+    	
+        return start;
     }
-    return head;
-  }
-/////////////////////////////////////////////////////////////////////	
-  public static void print(Node head) {
-    while(head!=null)
-    {
-      System.out.print(head.data+" -> ");
-      head=head.next;
+    public static Node delEnd(Node start, Node end) {
+    	 if (start == null) {
+             System.out.println("List is empty.");
+             return start;
+         }
+         if (start.next == null) {
+             start = null;
+             end = null;
+             return start;
+         }
+    	
+    	end=end.prev;
+    	end.next=null;
+    	return end;
     }
-    System.out.println("End");
-  }
-/////////////////////////////////////////////////////////////////////
-}
+    public static Node delAny(Node start, Node end){
+    	System.out.println("Enter the position to delete: ");
+    	int n=sc.nextInt();
+    	Node mover=start;
+    	for(int i=1;i<=n-2;i++)
+    		mover=mover.next;
+    	mover.next=mover.next.next;
+    	mover.next.prev=mover;
+    	
+        return start;
+    }
+     public static void search(Node start){
+    	 System.out.println("enter the registration number to be found");
+    	 int reg=sc.nextInt();
+    	 Node mover = start;
+    	 int cnt=0;
+    	 while(mover!=null){
+             cnt++;
+             
+             if(mover.regd_no==reg){
+                 System.out.println(reg+" found at index "+cnt);
+                 System.out.println("Enter new marks ");
+                 mover.mark=sc.nextFloat();
+                 System.out.println("Mark updated successfully ");
+                 return;
+             }
+             mover=mover.next;
+         }
+    	 System.out.println("Error !! Registration number not found");
+     } 
+} 
