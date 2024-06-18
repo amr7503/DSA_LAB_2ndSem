@@ -1,0 +1,19 @@
+public class HAQ03_Decimal2Binary_Recursive {
+
+	
+	public static String decToBin(int n)
+	{
+		if(n==0) return "";
+		
+		return decToBin(n/2)+(n%2);
+	}
+
+
+	public static void main(String[] args) {
+		int n=6;
+		String ans=(n==0)?"0":decToBin(n);
+		System.out.println("Binary equivalent of "+n+" is "+ans);
+
+	}
+
+}
