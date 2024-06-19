@@ -32,9 +32,9 @@ public class QueueDemo2 {
     if(front==null) System.out.println("Queue is Empty(Underflow)");
     else{
       System.out.println("Node to be deleted: "+front.info);
-      Node temp=front;
+      
       front=front.next;
-      temp.next=null;
+    
     }
     if(front==null) rear=null;
 
